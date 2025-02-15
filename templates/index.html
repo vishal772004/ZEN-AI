@@ -3,108 +3,126 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pest Detection System</title>
+    <title>Pest Detection</title>
     <style>
-        /* General Styles */
         body {
             font-family: Arial, sans-serif;
-            text-align: center;
-            padding: 20px;
-            background-color: #f4f4f4;
-        }
-        h1 {
-            color: #2c3e50;
-            margin-bottom: 10px;
-        }
-        p {
-            color: #555;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
         }
 
-        /* Form Styles */
-        .container {
-            max-width: 500px;
-            margin: auto;
-            background: white;
+        header {
+            background-color: #2c3e50;
+            color: white;
             padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
         }
+
+        h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+
         form {
+            display: flex;
+            justify-content: center;
             padding: 20px;
-            border: 2px dashed #3498db;
-            background: #ecf0f1;
-            border-radius: 10px;
         }
+
         input[type="file"] {
             padding: 10px;
-            border: none;
-            width: 100%;
-            margin: 10px 0;
+            margin-right: 10px;
+            font-size: 1em;
         }
-        input[type="submit"] {
+
+        button {
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
             background-color: #3498db;
             color: white;
             border: none;
-            padding: 10px 20px;
             border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background 0.3s;
         }
-        input[type="submit"]:hover {
+
+        button:hover {
             background-color: #2980b9;
         }
 
-        /* Result Styles */
-        .result {
-            margin-top: 20px;
-            background: white;
-            padding: 15px;
-            border-radius: 10px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        h2 {
+            color: #2980b9;
         }
-        .result img {
+
+        h3 {
+            margin-top: 20px;
+            font-size: 1.4em;
+            color: #34495e;
+        }
+
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+
+        .container {
+            padding: 20px;
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .pest-image {
             max-width: 100%;
             height: auto;
+            margin-top: 20px;
             border-radius: 10px;
-            margin-top: 10px;
-        }
-        .result p {
-            font-size: 16px;
-            color: #333;
-        }
-        .error {
-            color: red;
-            font-weight: bold;
         }
     </style>
 </head>
 <body>
-
-    <h1>Pest Detection System</h1>
-    <p>Upload an insect image to identify the pest and get pesticide recommendations.</p>
+    <header>
+        <h1>Pest Detection & Pesticide Recommendation</h1>
+    </header>
 
     <div class="container">
         <form action="/" method="post" enctype="multipart/form-data">
-            <input type="file" name="file" required>
-            <br>
-            <input type="submit" value="Upload & Predict">
+            <input type="file" name="file">
+            <button type="submit">Upload & Predict</button>
         </form>
+
+        {% if filename %}
+            <h2>Detected Pest: {{ pest }}</h2>
+
+            <!-- Display the uploaded image -->
+            <h3>Uploaded Image:</h3>
+            <img src="{{ url_for('static', filename='uploads/' + filename) }}" alt="Uploaded Pest Image" class="pest-image">
+
+            <h3>Recommended Pesticides (Sorted by Cost):</h3>
+            <ul>
+                {% for pesticide in pesticides %}
+                    <li><b>{{ pesticide.name }}</b> - ₹{{ pesticide.price }}</li>
+                {% endfor %}
+            </ul>
+
+            <h3>Organic Alternatives:</h3>
+            <p>{{ organic }}</p>
+
+            <h3>Effect on Soil:</h3>
+            <p>{{ effect }}</p>
+        {% endif %}
     </div>
-
-    {% if filename %}
-        <div class="result">
-            <h2>Prediction Result</h2>
-            <img src="{{ url_for('static', filename='uploads/' + filename) }}" alt="Uploaded Image">
-            <p><strong>Pest Detected:</strong> {{ pest }}</p>
-            <p><strong>Recommended Pesticide:</strong> {{ pesticide }}</p>
-            <p><strong>Soil Impact:</strong> {{ effect }}</p>
-        </div>
-    {% endif %}
-
-    {% if error %}
-        <p class="error">{{ error }}</p>
-    {% endif %}
-
 </body>
 </html>
