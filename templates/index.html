@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pest Detection System</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        p {
+            color: #555;
+        }
+
+        /* Form Styles */
+        .container {
+            max-width: 500px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        form {
+            padding: 20px;
+            border: 2px dashed #3498db;
+            background: #ecf0f1;
+            border-radius: 10px;
+        }
+        input[type="file"] {
+            padding: 10px;
+            border: none;
+            width: 100%;
+            margin: 10px 0;
+        }
+        input[type="submit"] {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+        input[type="submit"]:hover {
+            background-color: #2980b9;
+        }
+
+        /* Result Styles */
+        .result {
+            margin-top: 20px;
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .result img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin-top: 10px;
+        }
+        .result p {
+            font-size: 16px;
+            color: #333;
+        }
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Pest Detection System</h1>
+    <p>Upload an insect image to identify the pest and get pesticide recommendations.</p>
+
+    <div class="container">
+        <form action="/" method="post" enctype="multipart/form-data">
+            <input type="file" name="file" required>
+            <br>
+            <input type="submit" value="Upload & Predict">
+        </form>
+    </div>
+
+    {% if filename %}
+        <div class="result">
+            <h2>Prediction Result</h2>
+            <img src="{{ url_for('static', filename='uploads/' + filename) }}" alt="Uploaded Image">
+            <p><strong>Pest Detected:</strong> {{ pest }}</p>
+            <p><strong>Recommended Pesticide:</strong> {{ pesticide }}</p>
+            <p><strong>Soil Impact:</strong> {{ effect }}</p>
+        </div>
+    {% endif %}
+
+    {% if error %}
+        <p class="error">{{ error }}</p>
+    {% endif %}
+
+</body>
+</html>
