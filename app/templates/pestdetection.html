@@ -1,0 +1,212 @@
+{% extends "layout.html" %}
+
+{% block title %}Pest Detection - Zen-AI{% endblock %}
+
+{% block content %}
+<style>
+    /* General styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f7fa;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #007BFF;
+    padding: 15px;
+    text-align: center;
+    color: white;
+}
+
+header .logo {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+/* Main content container */
+.container {
+    max-width: 800px;
+    margin: 50px auto;
+    background-color: #ffffff;
+    padding: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+/* Heading */
+h1 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Form styling */
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 8px;
+    display: block;
+}
+
+input[type="file"] {
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 100%;
+    transition: border-color 0.3s ease;
+}
+
+input[type="file"]:focus {
+    border-color: #007BFF;
+    outline: none;
+}
+
+button[type="submit"] {
+    background-color: #007BFF;
+    color: white;
+    font-size: 1.1rem;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+/* Alerts */
+.alert {
+    padding: 15px;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+/* Prediction results */
+h2 {
+    font-size: 1.5rem;
+    color: #007BFF;
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+p {
+    font-size: 1.1rem;
+    color: #333;
+}
+
+strong {
+    font-weight: bold;
+}
+
+/* Image display */
+img {
+    margin-top: 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+img:hover {
+    transform: scale(1.05);
+}
+
+/* Footer */
+footer {
+    background-color: #333;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+footer .footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+footer .footer-links a {
+    color: #fff;
+    text-decoration: none;
+    margin-right: 20px;
+    font-size: 1rem;
+}
+
+footer .footer-links a:hover {
+    text-decoration: underline;
+}
+
+footer .social-icons a {
+    color: #fff;
+    font-size: 1.5rem;
+    margin: 0 10px;
+}
+
+footer .social-icons a:hover {
+    color: #007BFF;
+}
+
+footer .copyright {
+    font-size: 0.9rem;
+    margin-top: 10px;
+    color: #bbb;
+}
+
+</style>
+    <div class="container mt-5">
+        <h1>Pest Detection</h1>
+        <form action="/pestdetection" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="file">Upload an Image of the Pest:</label>
+                <input type="file" name="file" accept="image/*" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+
+        {% if error %}
+            <div class="alert alert-danger mt-3">
+                <strong>Error!</strong> {{ error }}
+            </div>
+        {% endif %}
+
+        {% if filename %}
+            <h2 class="mt-4">Prediction Result:</h2>
+            <p><strong>Pest Detected:</strong> {{ pest }}</p>
+            <h3>Recommended Pesticides (Sorted by Cost):</h3>
+            <ul>
+                {% for pesticide in pesticides %}
+                    <li><b>{{ pesticide['name'] }}</b> - ₹{{ pesticide['price'] }}</li>
+                {% else %}
+                    <li>No pesticides found for this pest.</li>
+                {% endfor %}
+            </ul>
+            
+            <h3>Organic Alternatives:</h3>
+            <p>{{ organic if organic else 'No organic alternatives available.' }}</p>
+            <p><strong>Effect on Soil:</strong> {{ effect }}</p>
+            <div>
+                <img src="{{ url_for('static', filename='uploads/' + filename) }}" alt="Uploaded Image" class="img-fluid" width="300">
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

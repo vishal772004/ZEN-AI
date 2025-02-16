@@ -1,0 +1,71 @@
+{% extends "layout.html" %}
+
+{% block title %}Home - Zen-AI{% endblock %}
+
+{% block content %}
+<style>
+    #about {
+    background-color: #f9f9f9;
+    padding: 50px 0;
+}
+
+.about-card {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 30px;
+    background-color: #fff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    text-align: center;
+}
+
+.about-card h2 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.about-card p {
+    font-size: 1.1rem;
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+</style>
+<main>
+    <section id="hero">
+        <h1>Welcome to Zen-AI</h1>
+        <p>Discover the power of artificial intelligence in agriculture</p>
+    </section>
+    <section id="about" class="about-section">
+        <div class="about-card" id="aboutCard">
+            <h2>About Us</h2>
+            <p>At Zen-AI, we are dedicated to transforming agriculture through technology. We provide innovative solutions to help farmers overcome common challenges such as unpredictable weather, pest infestations, inefficient irrigation, and soil degradation. Our goal is to empower farmers with real-time insights and data-driven decision-making tools to boost crop yields, reduce financial losses, and promote sustainable farming practices.</p>
+        </div>
+    </section>
+
+<section id="features">
+    <h2>Our Features</h2>
+    <div class="feature-grid">
+        <div class="feature-card">
+            <img src="/static/card1.jpg" alt="Crop Analysis">
+            <h3>Yield Detection</h3>
+            <p>Analyze crop health and predict yields with our advanced AI tools.</p>
+        </div>
+        <div class="feature-card">
+            <img src="/static/card2.jpg" alt="Soil Management">
+            <h3>Plant Disease Detection</h3>
+            <p>Identify and provide fertilizers for plant diseases using AI tools.</p>
+        </div>
+        <a href="/pestdetection">
+        <div class="feature-card">
+            <img src="/static/card4.webp" alt="Pest Control">
+            <h3>Pest Control</h3>
+            <p>Identify and manage pests efficiently with our AI-powered system.</p>
+        </div>
+        </a>
+    </div>
+</section>
+</main>
+{% endblock %}
