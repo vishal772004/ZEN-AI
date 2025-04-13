@@ -20,3 +20,9 @@ ML: Scikit-learn (SVM)
 CV: OpenCV
 
 Model File: pest_model.pkl
+👥 Contributors
+
+Keshav Sharma
+Vishal Sagar Murthy
+Bhaskar K
+Prabhakar S
